@@ -1,6 +1,7 @@
 import express from 'express';
 const app = express();
 import path from 'path';
+import techRouter from './routes/tech.js'
 
 import { fileURLToPath } from 'url';
 
@@ -14,6 +15,8 @@ app.use('/', express.static(path.join(__dirname, '../../dist')));
 app.get('/', (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, '../../dist'));
 });
+
+app.use('/tech', techRouter)
 
 app.use('*', (req, res) => {
   console.log('hitting 404 message');
