@@ -1,6 +1,5 @@
 import React from 'react';
 import Login from './Login';
-import Signup from './Signup';
 import '../css/styles.css';
 import book from '../assets/book.png';
 
@@ -11,7 +10,6 @@ return (
 <img src={book} alt="logo" />
 <div className='landing'>
     <Login></Login>
-    <Signup></Signup>
 </div>
 </div>
 );
