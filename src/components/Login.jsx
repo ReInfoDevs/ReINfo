@@ -1,10 +1,22 @@
 import React from 'react';
 import '../css/styles.css';
 
+
+
 const login = () => {
+    const handleGoogleLogin = () => {
+        // Redirects to the backend's Google OAuth route
+        //window.location.href = "http://localhost:3333/auth/google";
+        try {
+            fetch('localhost:3333/auth/google')
+
+            
+        }
+      };
+    
     return (
         <div className='login'>
-            <button className="gsi-material-button">
+            <button onClick={handleGoogleLogin} className="gsi-material-button">
                 <div className="gsi-material-button-state"></div>
                 <div className="gsi-material-button-content-wrapper">
                     <div className="gsi-material-button-icon">
