@@ -8,8 +8,8 @@
     "start": "webpack serve --open --mode development",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --mode production",
-    "server": "node server.js",
-    "dev": "nodemon server.js"
+    "server": "node ./src/server/server.js",
+    "dev": "nodemon ./src/server/server.js"
   },
   "keywords": [],
   "author": "",
