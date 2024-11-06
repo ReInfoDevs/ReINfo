@@ -3,7 +3,8 @@ import Login from './Login';
 import '../css/styles.css';
 import book from '../assets/book.png';
 
-const landing = () => {
+
+const Landing = () => {
 return (
     <div id="landingContainer">
         <header className='landingheader'>LearnGineer</header>
@@ -17,4 +18,4 @@ return (
 );
 }
 
-export default landing;
+export default Landing;

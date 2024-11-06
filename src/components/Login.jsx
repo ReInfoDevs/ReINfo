@@ -3,7 +3,7 @@ import '../css/styles.css';
 import { useNavigate } from 'react-router-dom';
 
 
-const login = () => {
+const Login = () => {
 
     const navigate = useNavigate();
     const handleGoogleLogin = async () => {
@@ -41,4 +41,4 @@ const login = () => {
     )
 }
 
-export default login;
+export default Login;
