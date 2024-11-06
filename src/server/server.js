@@ -39,14 +39,16 @@ app.use('/', express.static(path.join(__dirname, '../../dist')));
 // Use authRoutes for all authentication-related routes
 app.use('/auth', authRoutes);
 
+app.get('/categories', resourceController.getCategories, (req, res) => {
+  res.status(200).json(res.locals.categories)
+})
 
-app.get('/categories', resourceController.getTechNames, (req, res) => {
+app.get('/tech', resourceController.getTechNames, (req, res) => {
   res.status(200).json(res.locals.techNames);
 })
 
-
 app.get('/resources', resourceController.getTechResources, (req, res) => {
-  res.status(200).json(res.locals);
+  res.status(200).json(res.locals.techResources);
 })
 
 // Catch-all route for 404 errors
