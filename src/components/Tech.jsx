@@ -13,7 +13,9 @@ const Tech = async ({ tech, category, changeTech }) => {
     }
     return (
         <div>
+            <ul>
             {techArray.map((item, index) => ( <button onClick={handleOnClick}key={index}></button>))}
+            </ul>
         </div>
     )
 }

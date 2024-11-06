@@ -15,7 +15,9 @@ const Categories = async ({ tech, category, changeCat }) => {
 
     return (
         <div>
-            {catArray.map((item, index) => ( <button onClick={handleOnClick}key={index}></button>))}
+            <ul>
+            {catArray.map((item, index) => ( <button onClick={handleOnClick}key={index}></button>))}  
+            </ul>
         </div>
     )
 }
