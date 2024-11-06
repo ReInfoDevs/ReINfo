@@ -19,7 +19,7 @@ router.get(
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
     console.log('Authentication successful, redirecting to home');
-    res.redirect('/');
+    res.redirect('http://localhost:8080/home');
   }
 );
 
@@ -37,9 +37,9 @@ router.get('/logout', (req, res) => {
 // Route to get the current user
 router.get('/current_user', (req, res) => {
   if (req.user) {
-    return res.send(req.user);
+    res.send(req.user);
   } else {
-    return res.status(401).send('No user is currently logged in.');
+     res.status(401).send('No user is currently logged in.');
   }
 });
 
