@@ -3,6 +3,8 @@
 import express from 'express';
 import session from 'express-session';
 import path from 'path';
+import resourceController from './controllers/resources.js'
+
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 import passport from './config/passportConfig.js';
@@ -37,9 +39,15 @@ app.use('/', express.static(path.join(__dirname, '../../dist')));
 // Use authRoutes for all authentication-related routes
 app.use('/auth', authRoutes);
 
-app.get('/', (req, res) => {
-  res.send('Welcome to the Home Page! You are logged in.');
-});
+
+app.get('/categories', resourceController.getTechNames, (req, res) => {
+  res.status(200).json(res.locals.techNames);
+})
+
+
+app.get('/resources', resourceController.getTechResources, (req, res) => {
+  res.status(200).json(res.locals);
+})
 
 // Catch-all route for 404 errors
 app.use('*', (req, res) => {
