@@ -15,6 +15,27 @@ const db = {
   },
 };
 
+resourceController.getCategories = async (req, res, next) => {
+  console.log('Retrieving categories');
+  try {
+    const query =
+      'SELECT array_agg(ttc.tech_category ORDER BY ttc.tech_category) FROM tech_category ttc';
+    const queryResults = await db.query(query, []);
+
+    console.log(`data: ${queryResults.rows[0].array_agg}`);
+    res.locals.categories = queryResults.rows[0].array_agg;
+    return next();
+  } catch (e) {
+    const errorObj = {
+      stack: e.stack || 'resourceController.getCategories failed',
+      status: e.status || 404,
+      message: e.message || 'An error occurred.',
+    };
+    console.error(JSON.stringify(e, null, 2));
+    return next(errorObj);
+  }
+};
+
 resourceController.getTechNames = async (req, res, next) => {
   console.log('Retrieving all tech names');
   const techCategory = req.body.techCategory;
@@ -52,7 +73,7 @@ resourceController.getTechResources = async (req, res, next) => {
     return next();
   } catch (e) {
     return next({
-      stack: e.stack || 'resourceController.getTechNames failed',
+      stack: e.stack || 'resourceController.getResources failed',
       status: e.status || 404,
       message: e.message || 'An error occurred.',
     });
