@@ -1,6 +1,6 @@
 import supabase from '../config/supabaseClient.js';
 import pkg from 'pg';
-const {Pool} = pkg;
+const { Pool } = pkg;
 
 const resourceController = {};
 
@@ -20,23 +20,20 @@ resourceController.getTechNames = async (req, res, next) => {
   const techCategory = req.body.techCategory;
   console.log(techCategory);
   try {
-    const query = 'SELECT array_agg(ttn.tech_name ORDER BY ttn.tech_name) FROM tech_name ttn INNER JOIN tech_category ttc ON ttn.tech_id = ttc.id WHERE ttc.tech_category = $1';
+    const query =
+      'SELECT array_agg(ttn.tech_name ORDER BY ttn.tech_name) FROM tech_name ttn INNER JOIN tech_category ttc ON ttn.tech_id = ttc.id WHERE ttc.tech_category = $1';
     const queryResults = await db.query(query, [techCategory]);
-    // const { queryResults, error } = await supabase
-    //   .from('tech_name')
-    //   .select('tech_name, tech_category(id, tech_category)')
-    //   .eq('tech_category.tech_category', techCategory);  // Assuming $1 is the dynamic category value
+
     console.log(`data: ${queryResults.rows[0].array_agg}`);
-    // change it into an array
-    res.locals.techNames = queryResults.rows[0].array_agg; // array of tech names for category from query results
+    res.locals.techNames = queryResults.rows[0].array_agg;
     return next();
   } catch (e) {
     const errorObj = {
       stack: e.stack || 'resourceController.getTechNames failed',
       status: e.status || 404,
       message: e.message || 'An error occurred.',
-    }
-    console.error(JSON.stringify(e,null,2))
+    };
+    console.error(JSON.stringify(e, null, 2));
     return next(errorObj);
   }
 };
@@ -46,13 +43,13 @@ resourceController.getTechResources = async (req, res, next) => {
   const tech = req.body.tech;
   console.log(tech);
   try {
-    const text = 'SELECT ttr.what, ttr.how, ttr.video FROM tech_resources ttr INNER JOIN tech_name ttn ON ttr.tech_name_id = ttn.id WHERE ttn.tech_name = $1';
+    const text =
+      'SELECT ttr.what, ttr.how, ttr.video FROM tech_resources ttr INNER JOIN tech_name ttn ON ttr.tech_name_id = ttn.id WHERE ttn.tech_name = $1';
     const queryResults = await db.query(text, [tech]);
-    
+
     console.log(queryResults.rows);
-    // change it into an array
-    res.locals.techResources = queryResults.rows;// array of tech names for category from query results
-    return next()
+    res.locals.techResources = queryResults.rows;
+    return next();
   } catch (e) {
     return next({
       stack: e.stack || 'resourceController.getTechNames failed',
