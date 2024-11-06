@@ -12,7 +12,7 @@ router.get(
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
     // Successful authentication, redirect home
-    res.redirect('/');
+    res.redirect('http://localhost:8080/home');
   }
 );
 

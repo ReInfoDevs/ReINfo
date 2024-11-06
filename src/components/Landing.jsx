@@ -5,13 +5,15 @@ import book from '../assets/book.png';
 
 const landing = () => {
 return (
-<div>
-<header className='landingheader'>LearnGineer</header>    
-<img src={book} alt="logo" />
-<div className='landing'>
-    <Login></Login>
-</div>
-</div>
+    <div id="landingContainer">
+        <header className='landingheader'>LearnGineer</header>
+        <div className='center'>
+            <p>Everything you need in one place: resources for all your tech needs.</p>    
+            <div className='landing'>
+                <Login></Login>
+            </div>
+        </div>
+    </div>
 );
 }
 

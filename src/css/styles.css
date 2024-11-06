@@ -1,4 +1,19 @@
 /* For the landing page */
+.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+#landingContainer{
+  border:solid ;
+  align-self: center;
+  border-radius: 15px;
+  overflow: hidden;
+  max-width: 800px;
+  max-height: 1000px;
+}
+
 .landing {
     display: flex;
     justify-content: space-between;  /* Space out the forms */
@@ -28,6 +43,7 @@
 
 .login {
     border: 1px solid #ccc;  /* Optional: Light border for the login form */
+    width: 100%;
 }
 
 .signup {

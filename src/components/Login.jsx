@@ -1,16 +1,20 @@
 import React from 'react';
 import '../css/styles.css';
-
+import { useNavigate } from 'react-router-dom';
 
 
 const login = () => {
-    const handleGoogleLogin = () => {
+
+    const navigate = useNavigate();
+    const handleGoogleLogin = async () => {
         // Redirects to the backend's Google OAuth route
         //window.location.href = "http://localhost:3333/auth/google";
         try {
-            fetch('localhost:3333/auth/google')
-
+           window.location.href = "http://localhost:3333/auth/google"
             
+        }
+        catch {
+
         }
       };
     
