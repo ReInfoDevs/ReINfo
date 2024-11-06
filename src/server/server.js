@@ -3,7 +3,7 @@
 import express from 'express';
 import session from 'express-session';
 import path from 'path';
-import techRouter from './routes/tech.js'
+import resourceController from './controllers/resources.js'
 
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
@@ -39,7 +39,15 @@ app.use('/', express.static(path.join(__dirname, '../../dist')));
 // Use authRoutes for all authentication-related routes
 app.use('/auth', authRoutes);
 
-app.use('/tech', techRouter)
+
+app.get('/categories', resourceController.getTechNames, (req, res) => {
+  res.status(200).json(res.locals);
+})
+
+
+app.get('/resources', resourceController.getTechResources, (req, res) => {
+  res.status(200).json(res.locals);
+})
 
 // Catch-all route for 404 errors
 app.use('*', (req, res) => {
