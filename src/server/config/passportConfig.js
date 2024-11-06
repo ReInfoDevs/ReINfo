@@ -1,10 +1,10 @@
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import dotenv from 'dotenv';
+import supabase from './supabaseClient.js'; // Import Supabase client
 
 dotenv.config();
-console.log('GOOGLE_CLIENT_ID:', process.env.GOOGLE_CLIENT_ID);
-console.log('GOOGLE_CLIENT_SECRET:', process.env.GOOGLE_CLIENT_SECRET);
+
 passport.use(
   new GoogleStrategy(
     {
@@ -14,15 +14,23 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
-        // Mock user data for testing purposes
-        const mockUser = {
-          id: profile.id,
-          provider: 'google',
-          profile: profile._json,
-        };
+        // Upsert the user's Google profile information into Supabase
+        const { data, error } = await supabase
+          .from('users')
+          .upsert({
+            id: profile.id,                       // Google profile ID as primary key
+            provider: 'google',                   // OAuth provider
+            email: profile.emails[0].value,       // User's email from Google profile
+            name: profile.displayName,            // User's name from Google profile
+            profile_picture: profile.photos[0].value, // Profile picture URL
+            profile: profile._json                // Full JSON profile data
+          });
 
-        // Pass mock user data to Passport for testing without Supabase
-        return done(null, mockUser);
+        if (error) {
+          console.error('Error saving user to Supabase:', error);
+          return done(error, null);
+        }
+        return done(null, data[0]); // Returns the user record after upsert
       } catch (err) {
         console.error('Error in Passport GoogleStrategy:', err);
         return done(err, null);
