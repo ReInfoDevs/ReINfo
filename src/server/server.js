@@ -37,6 +37,10 @@ app.use('/', express.static(path.join(__dirname, '../../dist')));
 // Use authRoutes for all authentication-related routes
 app.use('/auth', authRoutes);
 
+app.get('/', (req, res) => {
+  res.send('Welcome to the Home Page! You are logged in.');
+});
+
 // Catch-all route for 404 errors
 app.use('*', (req, res) => {
   console.log('hitting 404 message');

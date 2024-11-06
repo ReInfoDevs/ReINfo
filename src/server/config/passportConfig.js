@@ -1,7 +1,7 @@
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import dotenv from 'dotenv';
-import supabase from './supabaseClient.js'; // Import Supabase client
+import supabase from './supabaseClient.js';
 
 dotenv.config();
 
@@ -10,27 +10,52 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: '/auth/google/callback',
+      callbackURL: 'http://localhost:3333/auth/google/callback',
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
-        // Upsert the user's Google profile information into Supabase
-        const { data, error } = await supabase
-          .from('users')
-          .upsert({
-            id: profile.id,                       // Google profile ID as primary key
-            provider: 'google',                   // OAuth provider
-            email: profile.emails[0].value,       // User's email from Google profile
-            name: profile.displayName,            // User's name from Google profile
-            profile_picture: profile.photos[0].value, // Profile picture URL
-            profile: profile._json                // Full JSON profile data
-          });
+        // Log Google profile data to ensure it’s being received correctly
+        console.log('Google profile:', {
+          id: profile.id,
+          provider: 'google',
+          email: profile.emails[0].value,
+          name: profile.displayName,
+          profile_picture: profile.photos[0].value,
+          profile: profile._json,
+        });
 
+        // Attempt to upsert the user's Google profile information into Supabase
+        const { data, error } = await supabase
+  .from('users')
+  .upsert({
+    id: profile.id,
+    provider: 'google',
+    email: profile.emails[0].value,
+    name: profile.displayName,
+    profile_picture: profile.photos[0].value,
+    profile: profile._json,
+  })
+  .select(); // This explicitly tells Supabase to return the upserted data
+
+console.log('Supabase upsert response:', { data, error });
+
+        // Log the response from Supabase for debugging
+        console.log('Supabase upsert response:', { data, error });
+
+        // Check if there was an error during the upsert operation
         if (error) {
           console.error('Error saving user to Supabase:', error);
           return done(error, null);
         }
-        return done(null, data[0]); // Returns the user record after upsert
+
+        // Handle the case where no data is returned
+        if (!data || data.length === 0) {
+          console.error('No data returned from Supabase upsert');
+          return done(new Error('No data returned from Supabase upsert'), null);
+        }
+
+        // Successful upsert; return the user data to Passport
+        return done(null, data[0]);
       } catch (err) {
         console.error('Error in Passport GoogleStrategy:', err);
         return done(err, null);

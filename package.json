@@ -12,12 +12,15 @@
     "dev": "nodemon ./src/server/server.js"
   },
   "jest": {
-  "testEnvironment": "node",
-  "moduleFileExtensions": ["js", "jsx"],
-  "transform": {
-    "^.+\\.jsx?$": "babel-jest"
-  }
-},
+    "testEnvironment": "node",
+    "moduleFileExtensions": [
+      "js",
+      "jsx"
+    ],
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest"
+    }
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -44,6 +47,7 @@
     "webpack-dev-server": "^5.1.0"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.46.1",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "express-session": "^1.18.1",
