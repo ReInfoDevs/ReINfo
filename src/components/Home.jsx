@@ -7,7 +7,9 @@ import Resources from './Resources';
 //const [Resources, setCategory] = useState('');
 const Home = () => {
 const [category, setCategory] = useState('');
+console.log(category);
 const [tech, setTech] = useState('');
+console.log(tech);
 
 const changeCat = (category) => {
     setCategory(category);
@@ -19,7 +21,7 @@ const changeTech = (category) => {
 
 
 
-useEffect(() => {
+
 
     if(category === '' && tech === ''){
         return (
@@ -27,7 +29,7 @@ useEffect(() => {
                 <Categories tech={tech} category={category} changeCat={changeCat}/>
             </div>
         )
-    }
+    };
 
     if(category !== '' && tech === ''){
         return (
@@ -35,7 +37,7 @@ useEffect(() => {
                 <Tech tech={tech} category={category} changeTech={changeTech}/>
             </div>
         )
-    }
+    };
 
     if(category !== '' && tech !== ''){
         return (
@@ -43,9 +45,9 @@ useEffect(() => {
                 <Resources tech={tech} category={category}/>
             </div>
         )
-    }
+    };
 
-},[tech, category])
+
     
 }
 
