@@ -41,7 +41,7 @@ app.use('/auth', authRoutes);
 
 
 app.get('/categories', resourceController.getTechNames, (req, res) => {
-  res.status(200).json(res.locals);
+  res.status(200).json(res.locals.techNames);
 })
 
 
