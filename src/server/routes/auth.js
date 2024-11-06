@@ -4,14 +4,21 @@ import passport from '../config/passportConfig.js';
 const router = express.Router();
 
 // Google OAuth login route
-router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+router.get('/google', (req, res, next) => {
+  console.log('Initiating Google OAuth');
+  passport.authenticate('google', { scope: ['profile', 'email'] })(req, res, next);
+});
 
 // Google OAuth callback route
 router.get(
   '/google/callback',
+  (req, res, next) => {
+    console.log('Received callback from Google');
+    next();
+  },
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
-    // Successful authentication, redirect home
+    console.log('Authentication successful, redirecting to home');
     res.redirect('http://localhost:8080/home');
   }
 );
